@@ -328,29 +328,29 @@ export default function MedicineVerification() {
   }, []);
 
   // Fetch medicines with debounce (commented out)
-  // useEffect(() => {
-  //   const delayDebounceFn = setTimeout(() => {
-  //     if (searchTerm) {
-  //       fetchMedicines(searchTerm);
-  //     } else {
-  //       setMedicines([]);
-  //     }
-  //   }, 300);
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm) {
+        fetchMedicines(searchTerm);
+      } else {
+        setMedicines([]);
+      }
+    }, 300);
 
-  //   return () => clearTimeout(delayDebounceFn);
-  // }, [searchTerm]);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
-  // const fetchMedicines = async (term) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:8000/api/search-medicine?q=${term}`);
-  //     if (!response.ok) throw new Error("Failed to fetch medicines");
-  //     const data = await response.json();
-  //     setMedicines(data);
-  //   } catch (err) {
-  //     console.error(err);
-  //     setMedicines([]);
-  //   }
-  // };
+  const fetchMedicines = async (term) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/medicine/search-medicine?q=${term}`);
+      if (!response.ok) throw new Error("Failed to fetch medicines");
+      const data = await response.json();
+      setMedicines(data);
+    } catch (err) {
+      console.error(err);
+      setMedicines([]);
+    }
+  };
 
   const handleScanSuccess = (qrData) => {
     console.log(qrData);
