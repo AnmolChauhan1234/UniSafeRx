@@ -264,3 +264,31 @@
 #         for chunk in iter(lambda: image_data.read(4096), b""):
 #             image_hash.update(chunk)
 #         return image_hash.hexdigest()
+
+
+
+
+
+
+
+
+
+
+# medicine/views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Medicine
+from .serializers import MedicineSerializer
+
+class MedicineSearchAPIView(APIView):
+    permission_classes = []  # or IsAuthenticated if you prefer
+
+    def get(self, request):
+        q = request.query_params.get('q', '').strip()
+        if q:
+            qs = Medicine.objects.filter(name__icontains=q)
+        else:
+            qs = Medicine.objects.all()
+        serializer = MedicineSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
