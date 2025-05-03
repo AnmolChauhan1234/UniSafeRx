@@ -10,11 +10,11 @@ class ReferenceImageInline(admin.TabularInline):
 
 class MedicineAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'barcode', 'brand', 'batch_number', 
+        'name', 'brand', 'batch_number', 
         'expiry_date', 'manufacturer', 'is_verified', 'activated_at'
     )
     list_filter = ('is_verified', 'manufacturer', 'expiry_date')
-    search_fields = ('name', 'barcode', 'batch_number', 'manufacturer')
+    search_fields = ('name', 'batch_number', 'manufacturer')
     readonly_fields = ('activated_at',)
     inlines = [ReferenceImageInline]
 

@@ -227,3 +227,33 @@ REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 7  # Example: 7 days in seconds
 # CONTRACT_ADDRESS = "0x..."  # from migration
 # CONTRACT_ABI = [...]        # from JSON file
 # GANACHE_PRIVATE_KEY = "..." # first account private key
+
+
+
+
+
+
+
+
+WEB3_PROVIDER = "http://127.0.0.1:7545"  # Ganache default
+CONTRACT_ADDRESS = "0xYourContractAddress"
+CONTRACT_ABI = [
+    {
+        "inputs": [
+            {"internalType": "string", "name": "key", "type": "string"},
+            {"internalType": "bytes32", "name": "hash", "type": "bytes32"}
+        ],
+        "name": "register",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{"internalType": "string", "name": "key", "type": "string"}],
+        "name": "getHash",
+        "outputs": [{"internalType": "bytes32", "name": "", "type": "bytes32"}],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+GANACHE_PRIVATE_KEY = "0xYourPrivateKeyHere"
