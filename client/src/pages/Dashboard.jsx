@@ -62,7 +62,7 @@ export default function Dashboard() {
         <motion.div variants={itemVariants} className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              Welcome back, <span className="text-indigo-600">User</span>
+              Welcome, <span className="text-indigo-600">{sessionStorage.getItem('role')}</span>
             </h1>
             <p className="text-gray-600 mt-1">Track and manage your medicine scans</p>
           </div>
@@ -117,7 +117,7 @@ export default function Dashboard() {
             </motion.div>
           </Link>
 
-          <Link to="/medicines">
+          <Link to="/dashboard">
             <motion.div 
               whileHover={{ y: -5 }}
               className="bg-white rounded-xl shadow-md p-6 flex items-center space-x-4 cursor-pointer hover:shadow-lg transition-all"
@@ -132,7 +132,7 @@ export default function Dashboard() {
             </motion.div>
           </Link>
 
-          <Link to="/history">
+          <Link to="/dashboard">
             <motion.div 
               whileHover={{ y: -5 }}
               className="bg-white rounded-xl shadow-md p-6 flex items-center space-x-4 cursor-pointer hover:shadow-lg transition-all"
