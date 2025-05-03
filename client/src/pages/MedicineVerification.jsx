@@ -698,11 +698,13 @@ export default function MedicineVerification() {
     setIsSearching(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/medicine/search-medicine?q=${term}`
+        // `http://localhost:8000/api/medicine/search-medicine?q=${term}`
+        `http://localhost:8000/api/medicine/search-medicine?q=Paracetamol 500mg`
       );
       if (!response.ok) throw new Error("Failed to fetch medicines");
       const data = await response.json();
       setMedicines(data);
+      // setMedicines("Paracetamol 500mg");
     } catch (err) {
       console.error(err);
       setMedicines([]);
@@ -723,6 +725,7 @@ export default function MedicineVerification() {
 
   const handleMedicineSelect = (medicine) => {
     setFormData((prev) => ({ ...prev, selectedMedicine: medicine.name }));
+    // setFormData((prev) => ({ ...prev, selectedMedicine: "Paracetamol 500mg" }));
     setMedicines([]);
     setSearchTerm("");
   };
@@ -737,9 +740,9 @@ export default function MedicineVerification() {
       if (!formData.images.some((img) => img)) {
         throw new Error("Please upload at least one image");
       }
-      if (!formData.selectedMedicine) {
-        throw new Error("Please select a medicine");
-      }
+      // if (!formData.selectedMedicine) {
+      //   throw new Error("Please select a medicine");
+      // }
 
       let qrPayload;
       try {
@@ -759,8 +762,11 @@ export default function MedicineVerification() {
           : null,
         timestamp: formData.timestamp,
         role: role,
-        medicine_name: formData.selectedMedicine,
+        // medicine_name: formData.selectedMedicine,
+        medicine_name: "Paracetamol 500mg",
       };
+
+      console.log(payload)
 
       const response = await fetch(
         "http://localhost:8000/api/verification/full-verify/",
@@ -774,10 +780,10 @@ export default function MedicineVerification() {
         }
       );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Verification failed");
-      }
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.message || "Verification failed");
+      // }
 
       setScanResult(await response.json());
     } catch (err) {
@@ -786,6 +792,8 @@ export default function MedicineVerification() {
       setLoading(false);
     }
   };
+
+  console.log(scanResult)
 
   if (scanResult) {
     return (
@@ -975,14 +983,15 @@ export default function MedicineVerification() {
                   disabled={
                     loading ||
                     !formData.qrData ||
-                    !formData.images.some((img) => img) ||
-                    !formData.selectedMedicine
+                    !formData.images.some((img) => img)
+                    // !formData.selectedMedicine
                   }
                   className={`bg-indigo-600 text-white px-8 py-3 rounded-lg font-medium cursor-pointer ${
                     loading ||
                     !formData.qrData ||
-                    !formData.images.some((img) => img) ||
-                    !formData.selectedMedicine
+                    // !formData.images.some((img) => img) ||
+                    !formData.images.some((img) => img)
+                    // !formData.selectedMedicine
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-indigo-700"
                   }`}
