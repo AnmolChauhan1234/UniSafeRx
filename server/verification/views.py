@@ -267,6 +267,22 @@ class FullVerifyView(APIView):
 
         print("QR Payload validated successfully")
 
+        # --- Step 3: Check for `medicine_name` in the request body ---
+        medicine_name = data.get("medicine_name")
+        if not medicine_name:
+            print("Error: Missing 'medicine_name' in request body")
+            return Response({"error": "Missing 'medicine_name' in request body"}, status=400)
+        
+        # Check if `medicine_name` from request matches the QR payload
+        if medicine_name.strip().lower() != qr["name"].strip().lower():
+            print(f"Error: 'medicine_name' from request does not match QR name")
+            return Response({
+                "verified": False,
+                "message": f"'medicine_name' from request does not match QR name"
+            }, status=400)
+
+        print(f"Medicine name verified: {medicine_name}")
+
         urls = data.get("image_urls", [])
         geo = data.get("geolocation")
         ts = data.get("timestamp")
@@ -281,21 +297,13 @@ class FullVerifyView(APIView):
 
         print(f"Received {len(urls)} image URLs, Geolocation: {geo}, Timestamp: {ts}, Role: {role}")
 
-        # --- Step 3: Lookup Medicine by batch number ---
+        # --- Step 4: Lookup Medicine by batch number ---
         try:
             med = Medicine.objects.get(batch_number=qr["batch_number"])
             print(f"Medicine found: {med.name} - {med.batch_number}")
         except Medicine.DoesNotExist:
             print(f"Error: Medicine not found for batch_number {qr['batch_number']}")
             return Response({"verified": False, "message": "Unknown batch number"}, status=404)
-
-        # --- Step 4: Compare medicine name in QR with the database ---
-        if "name" not in qr or qr["name"].strip().lower() != med.name.strip().lower():
-            print(f"Error: QR name '{qr.get('name')}' does not match medicine name '{med.name}'")
-            return Response({
-                "verified": False,
-                "message": f"Name mismatch: QR name '{qr.get('name')}' does not match registered medicine '{med.name}'"
-            }, status=400)
 
         # --- Step 5: Metadata verification ---
         mismatches = []
