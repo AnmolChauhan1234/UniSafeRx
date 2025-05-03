@@ -1,4 +1,3 @@
-# blockchain/image_matcher.py
 import cv2
 import numpy as np
 import requests
@@ -32,8 +31,8 @@ def orb_match(reference_urls, test_urls, threshold=60):
     if not ref_descs:
         return False
 
-    # Try every test image
-    for turl in test_urls:
+    # Try every test image, skip if duplicate URLs
+    for turl in set(test_urls):  # Using `set` to eliminate duplicate URLs
         try:
             timg = download_gray_image(turl)
             _, tdes = orb.detectAndCompute(timg, None)
