@@ -1,5 +1,3 @@
-// contracts/MedicineRegistry.sol
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract MedicineRegistry {
@@ -11,5 +9,9 @@ contract MedicineRegistry {
 
     function getHash(string memory key) public view returns (bytes32) {
         return medicineHashes[key];
+    }
+
+    function exists(string memory key) public view returns (bool) {
+        return medicineHashes[key] != bytes32(0);
     }
 }
