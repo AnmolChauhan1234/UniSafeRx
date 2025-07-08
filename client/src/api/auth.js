@@ -40,6 +40,7 @@ api.interceptors.response.use(
         // Clear all auth data if refresh fails
         sessionStorage.removeItem("access_token");
         sessionStorage.removeItem("device_uuid");
+        sessionStorage.removeItem("role");
         sessionStorage.removeItem("isLoggedIn");
         return Promise.reject(refreshError);
       }
@@ -56,7 +57,7 @@ export const loginUser = async (credentials) => {
       password: credentials.password,
     });
 
-    const { access_token, device_uuid } = response.data;
+    const { access_token, device_uuid , role} = response.data;
     if (!access_token || !device_uuid) {
       throw new Error("Invalid response format from server");
     }
@@ -64,6 +65,7 @@ export const loginUser = async (credentials) => {
     // Store auth data and set login status
     sessionStorage.setItem("access_token", access_token);
     sessionStorage.setItem("device_uuid", device_uuid);
+    sessionStorage.setItem("role", role);
     sessionStorage.setItem("isLoggedIn", "true");
 
     return { success: true };
@@ -87,7 +89,7 @@ export const registerUser = async (userData) => {
       role: userData.role || "consumer"
     });
 
-    const { access_token, device_uuid } = response.data;
+    const { access_token, device_uuid , role} = response.data;
     if (!access_token || !device_uuid) {
       throw new Error("Invalid response format from server");
     }
@@ -95,6 +97,7 @@ export const registerUser = async (userData) => {
     // Store auth data and set login status (auto-login after registration)
     sessionStorage.setItem("access_token", access_token);
     sessionStorage.setItem("device_uuid", device_uuid);
+    sessionStorage.setItem("role", role);
     sessionStorage.setItem("isLoggedIn", "true");
 
     return { 
@@ -136,6 +139,7 @@ export const logoutUser = async () => {
     // Clear all auth data regardless of API call success
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("device_uuid");
+    sessionStorage.removeItem("role");
     sessionStorage.removeItem("isLoggedIn");
     document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
