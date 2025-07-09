@@ -21,6 +21,7 @@ export default function Login() {
       // Navigation happens in AuthProvider
     } catch (error) {
       // Error handled in AuthProvider
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

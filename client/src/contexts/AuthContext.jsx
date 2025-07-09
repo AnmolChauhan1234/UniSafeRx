@@ -113,6 +113,7 @@ export function AuthProvider({ children }) {
         }
       } catch (error) {
         setIsLoggedIn(false);
+        console.log(error)
       } finally {
         setLoading(false);
       }

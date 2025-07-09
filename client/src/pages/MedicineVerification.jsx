@@ -624,7 +624,7 @@
 
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
   FaArrowLeft,
@@ -699,7 +699,7 @@ export default function MedicineVerification() {
     try {
       const response = await fetch(
         // `http://localhost:8000/api/medicine/search-medicine?q=${term}`
-        `http://localhost:8000/api/medicine/search-medicine?q=Paracetamol 500mg`
+        `${import.meta.env.VITE_API_URL_PROD}/api/medicine/search-medicine?q=Paracetamol 500mg`
       );
       if (!response.ok) throw new Error("Failed to fetch medicines");
       const data = await response.json();
@@ -769,7 +769,7 @@ export default function MedicineVerification() {
       console.log(payload)
 
       const response = await fetch(
-        "http://localhost:8000/api/verification/full-verify/",
+        `${import.meta.env.VITE_API_URL_PROD}/api/verification/full-verify/`,
         {
           method: "POST",
           headers: {
