@@ -208,7 +208,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (only for development)
 # OR, allow only specific origins (Recommended for production)
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React frontend (local development)
-    "https://yourfrontend.com",  # Your production frontend
+    "https://uni-safe-rx.vercel.app",  # Your production frontend
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # If using authentication (JWT, sessions, etc.)
